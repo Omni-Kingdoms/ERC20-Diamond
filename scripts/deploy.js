@@ -6,6 +6,7 @@ const { getSelectors, FacetCutAction } = require('./libraries/diamond.js')
 async function deployDiamond () {
   const accounts = await ethers.getSigners()
   const contractOwner = accounts[0]
+  console.log("Contract owner = ", contractOwner.address);
 
   // deploy DiamondCutFacet
   const DiamondCutFacet = await ethers.getContractFactory('DiamondCutFacet')
@@ -34,7 +35,7 @@ async function deployDiamond () {
     'DiamondLoupeFacet',
     'OwnershipFacet',
     'ERC20Facet',
-    'ERC20BatchFacet'
+    // 'ERC20BatchFacet'
   ]
   const cut = []
   for (const FacetName of FacetNames) {
@@ -46,7 +47,9 @@ async function deployDiamond () {
       facetAddress: facet.address,
       action: FacetCutAction.Add,
       functionSelectors: getSelectors(facet)
-    })
+    });
+
+    await verifyContract(facet, FacetName);
   }
 
   // upgrade diamond with facets
@@ -57,9 +60,12 @@ async function deployDiamond () {
   let receipt
   // call to init function
   let functionCall = diamondInit.interface.encodeFunctionData('init', [
-    'MMGratitude',
-    'MMM',
+    'OmniKingdoms',
+    'OKG',
     18,
+    '10000000000000000000000000',
+    contractOwner.address,
+    contractOwner.address
   ]);
   tx = await diamondCut.diamondCut(cut, diamondInit.address, functionCall)
   console.log('Diamond cut tx: ', tx.hash)
@@ -84,3 +90,34 @@ if (require.main === module) {
 }
 
 exports.deployDiamond = deployDiamond
+
+async function verifyContract(facet, FacetName, constructorArguments = []) {
+  const liveNetworks = [
+    "mainnet",
+    "goerli",
+    "mumbai",
+    "scroll",
+    "scroll_sepolia",
+    "arbg",
+    "fuji",
+    "mantle"
+  ];
+  if (!liveNetworks.includes(hre.network.name)) {
+    return; // Don't verify on test networks
+  }
+
+  try {
+    console.log("Waiting for 10 blocks to be mined...");
+    await facet.deployTransaction.wait(10);
+    console.log("Running verification");
+    await hre.run("verify:verify", {
+      address: facet.address,
+      contract: `contracts/facets/${FacetName}.sol:${FacetName}`,
+      network: hardhatArguments.network,
+      arguments: constructorArguments ? constructorArguments : [],
+    });
+  } catch (e) {
+    console.log("Verification failed: ", JSON.stringify(e, null, 2));
+    console.log(e);
+  }
+}

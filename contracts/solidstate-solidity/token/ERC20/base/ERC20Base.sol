@@ -5,6 +5,7 @@ pragma solidity ^0.8.0;
 import { IERC20 } from '../IERC20.sol';
 import { ERC20BaseInternal } from './ERC20BaseInternal.sol';
 import { ERC20BaseStorage } from './ERC20BaseStorage.sol';
+import {LibDiamond} from "../../../../libraries/LibDiamond.sol";
 
 /**
  * @title Base ERC20 implementation, excluding optional extensions
@@ -15,6 +16,10 @@ abstract contract ERC20Base is IERC20, ERC20BaseInternal {
      */
     function totalSupply() public view virtual override returns (uint256) {
         return _totalSupply();
+    }
+
+    function maxSupply() public view virtual returns (uint256) {
+        return _maxSupply();
     }
 
     /**
@@ -28,6 +33,21 @@ abstract contract ERC20Base is IERC20, ERC20BaseInternal {
         returns (uint256)
     {
         return _balanceOf(account);
+    }
+
+    function updateMaxSupply(uint256 amount) public {
+        LibDiamond.enforceIsContractOwner();
+        _updateMaxSupply(amount);
+    }
+
+    function updateFeeRecipient(address recipient) public {
+        LibDiamond.enforceIsContractOwner();
+        _updateFeeRecipient(recipient);
+    }
+
+    function mint(address account, uint256 amount) public {
+        _isAllowedToMint();
+        _mint(account, amount);
     }
 
     /**

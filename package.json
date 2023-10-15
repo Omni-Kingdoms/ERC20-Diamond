@@ -1,7 +1,7 @@
 {
   "name": "contracts-starter",
   "version": "1.0.0",
-  "description": "Template for contract projects.",
+  "description": "ERC20 contract for Omni Kingdoms",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/mudgen/contracts-starter#readme",
   "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.2",
     "@nomiclabs/hardhat-ethers": "^2.0.2",
     "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@openzeppelin/hardhat-upgrades": "^1.26.0",
     "chai": "^4.3.4",
     "dotenv": "^8.6.0",
     "ethereum-waffle": "^3.4.0",
@@ -26,6 +28,7 @@
     "hardhat": "^2.4.1",
     "prettier": "^2.3.2",
     "prettier-plugin-solidity": "^1.0.0-beta.13",
-    "standard": "^16.0.3"
+    "standard": "^16.0.3",
+    "hardhat-diamond-abi": "^3.0.1"
   }
 }

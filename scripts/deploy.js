@@ -59,14 +59,7 @@ async function deployDiamond () {
   let tx
   let receipt
   // call to init function
-  let functionCall = diamondInit.interface.encodeFunctionData('init', [
-    'OmniKingdoms',
-    'OKG',
-    18,
-    '10000000000000000000000000',
-    contractOwner.address,
-    contractOwner.address
-  ]);
+  let functionCall = diamondInit.interface.encodeFunctionData('init');
   tx = await diamondCut.diamondCut(cut, diamondInit.address, functionCall)
   console.log('Diamond cut tx: ', tx.hash)
   receipt = await tx.wait()

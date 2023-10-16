@@ -22,15 +22,4 @@ library ERC20BaseStorage {
         }
     }
 
-    function setMaxSupply(Layout storage l, uint256 amount) internal {
-        l.maxSupply = amount;
-    }
-
-    function setFeeRecipient(Layout storage l, address recipient) internal {
-        l.feeRecipient = recipient;
-    }
-
-    function setMinter(Layout storage l, address minter) internal {
-        l.minter = minter;
-    }
 }

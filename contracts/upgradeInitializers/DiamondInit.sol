@@ -30,7 +30,7 @@ contract DiamondInit {
 
     // You can add parameters to this function in order to pass in
     // data to set your own state variables
-    function init(string calldata name, string calldata symbol, uint8 decimals, uint256 maxSupply, address feeRecipient, address minter)
+    function init()
         external
     {
         // adding ERC165 data
@@ -49,14 +49,14 @@ contract DiamondInit {
         // More info here: https://eips.ethereum.org/EIPS/eip-2535#diamond-interface
         ERC20MetadataStorage.Layout storage l = ERC20MetadataStorage.layout();
 
-        l.setName(name);
-        l.setSymbol(symbol);
-        l.setDecimals(decimals);
+        l.name = "Omni Kingdoms";
+        l.symbol = "OKG";
+        l.decimals = 18;
 
         ERC20BaseStorage.Layout storage lb = ERC20BaseStorage.layout();
 
-        lb.setMaxSupply(maxSupply);
-        lb.setFeeRecipient(feeRecipient);
-        lb.setMinter(minter);
+        lb.maxSupply = 10000000000000000000000000;
+        lb.feeRecipient = msg.sender;
+        lb.minter = msg.sender;
     }
 }

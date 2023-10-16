@@ -112,7 +112,7 @@ module.exports = {
       url: scrollUrl,
       accounts: [keys],
     },
-    scroll_test: {
+    scroll_sepolia: {
       gas: 2100000,
       gasPrice: 8000000000,
       gasLimit: 50000000000000,

@@ -15,11 +15,19 @@ abstract contract ERC20Base is IERC20, ERC20BaseInternal {
      * @inheritdoc IERC20
      */
     function totalSupply() public view virtual override returns (uint256) {
-        return _totalSupply();
+        return ERC20BaseStorage.layout().totalSupply;
     }
 
     function maxSupply() public view virtual returns (uint256) {
-        return _maxSupply();
+        return ERC20BaseStorage.layout().maxSupply;
+    }
+
+    function feeRecipientAddress() public view virtual returns (address){
+        return ERC20BaseStorage.layout().feeRecipient;
+    }
+
+    function minterRole() public view virtual returns (address){
+        return ERC20BaseStorage.layout().minter;
     }
 
     /**

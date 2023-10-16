@@ -17,9 +17,13 @@ abstract contract ERC20BaseInternal is IERC20Internal {
         return ERC20BaseStorage.layout().totalSupply;
     }
 
-    function _maxSupply() internal view virtual returns(uint256) {
-        return ERC20BaseStorage.layout().maxSupply;
-    }
+    // function _maxSupply() internal view virtual returns(uint256) {
+    //     return ERC20BaseStorage.layout().maxSupply;
+    // }
+
+    // function _feeRecipientAddress() internal view virtual returns(address){
+    //     return ERC20BaseStorage.layout().feeRecipient;
+    // }
 
     /**
      * @notice query the token balance of given account

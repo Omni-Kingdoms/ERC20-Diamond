@@ -49,19 +49,9 @@ abstract contract ERC20BaseInternal is IERC20Internal {
         emit Approval(holder, spender, amount);
     }
 
-    function _updateMaxSupply(uint256 amount) internal virtual {
-        ERC20BaseStorage.Layout storage l = ERC20BaseStorage.layout();
-        l.maxSupply = amount;
-    }
-
-    function _updateFeeRecipient(address recipient) internal virtual {
-        ERC20BaseStorage.Layout storage l = ERC20BaseStorage.layout();
-        l.feeRecipient = recipient;
-    }
-
     function _isAllowedToMint() internal virtual returns (bool) {
         ERC20BaseStorage.Layout storage l = ERC20BaseStorage.layout();
-        require(msg.sender == l.minter, 'ERC20: Not allowed to mint');
+        require(msg.sender == l.minter, "ERC20: Not allowed to mint");
         return true;
     }
 

@@ -39,16 +39,21 @@ abstract contract ERC20Base is IERC20, ERC20BaseInternal {
 
     function updateMaxSupply(uint256 amount) public {
         LibDiamond.enforceIsContractOwner();
-        _updateMaxSupply(amount);
+        ERC20BaseStorage.layout().maxSupply = amount;
     }
 
     function updateFeeRecipient(address recipient) public {
         LibDiamond.enforceIsContractOwner();
-        _updateFeeRecipient(recipient);
+        ERC20BaseStorage.layout().feeRecipient = recipient;
+    }
+
+    function updateMinter(address minter) public {
+        LibDiamond.enforceIsContractOwner();
+        ERC20BaseStorage.layout().minter = minter;
     }
 
     function mint(address account, uint256 amount) public {
-        // _isAllowedToMint();
+        _isAllowedToMint();
         _mint(account, amount);
     }
 

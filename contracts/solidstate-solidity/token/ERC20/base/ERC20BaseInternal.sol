@@ -66,6 +66,7 @@ abstract contract ERC20BaseInternal is IERC20Internal {
         _beforeTokenTransfer(address(0), account, amount);
 
         ERC20BaseStorage.Layout storage l = ERC20BaseStorage.layout();
+        require(l.totalSupply + amount <= l.maxSupply, "ERC20: max supply exceeded");
         l.totalSupply += amount;
         l.balances[account] += amount;
 

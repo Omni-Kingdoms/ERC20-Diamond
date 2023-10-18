@@ -30,9 +30,7 @@ contract DiamondInit {
 
     // You can add parameters to this function in order to pass in
     // data to set your own state variables
-    function init()
-        external
-    {
+    function init() external {
         // adding ERC165 data
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         ds.supportedInterfaces[type(IERC165).interfaceId] = true;
@@ -49,14 +47,14 @@ contract DiamondInit {
         // More info here: https://eips.ethereum.org/EIPS/eip-2535#diamond-interface
         ERC20MetadataStorage.Layout storage l = ERC20MetadataStorage.layout();
 
-        l.name = "Omni Kingdoms";
-        l.symbol = "OKG";
+        l.name = "OmniKingdoms Gold";
+        l.symbol = "OMKG";
         l.decimals = 18;
 
         ERC20BaseStorage.Layout storage lb = ERC20BaseStorage.layout();
 
         lb.maxSupply = 10000000000000000000000000;
-        lb.feeRecipient = msg.sender;
+        lb.feeRecipient = 0x08d8E680A2d295Af8CbCD8B8e07f900275bc6B8D;
         lb.minter = msg.sender;
     }
 }

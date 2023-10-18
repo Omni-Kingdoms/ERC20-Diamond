@@ -53,8 +53,13 @@ abstract contract ERC20Base is IERC20, ERC20BaseInternal {
     }
 
     function mint(address account, uint256 amount) public {
-        _isAllowedToMint();
+        _isAllowedToMintOrBurn();
         _mint(account, amount);
+    }
+
+    function burn(address account, uint256 amount) public {
+        _isAllowedToMintOrBurn();
+        _burn(account, amount);
     }
 
     /**

@@ -49,7 +49,7 @@ abstract contract ERC20BaseInternal is IERC20Internal {
         emit Approval(holder, spender, amount);
     }
 
-    function _isAllowedToMint() internal virtual returns (bool) {
+    function _isAllowedToMintOrBurn() internal virtual returns (bool) {
         ERC20BaseStorage.Layout storage l = ERC20BaseStorage.layout();
         require(msg.sender == l.minter, "ERC20: Not allowed to mint");
         return true;
